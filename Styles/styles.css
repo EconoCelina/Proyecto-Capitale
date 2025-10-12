@@ -1,0 +1,174 @@
+header {
+    background-color: rgb(61, 64, 203);
+    color: white;
+    top: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 10px 0;
+    bottom: 0px;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width: 100%;
+    font-size: 25px;
+}
+
+.subtitulo{
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(42, 200, 66);
+    color: white;
+    height: 50px;
+    top: 0px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width: 100%;
+}
+
+#pais-adivinar{
+    align-items: center;
+    justify-content: space-between;
+    display: flex;
+}
+
+#inicio{
+    font-weight: bold;
+    font-size: 28px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#boton-izquierda{
+    font-size: 28px;
+}
+
+#boton-derecha{
+    font-size: 28px;
+}
+
+#input{
+    font-size: 22px ;
+    border: 2px solid #ddd;
+    text-align: center;
+}
+
+#boton-adivinar{
+    font-size: 22px;
+    background-color: rgb(61, 64, 203);
+    color: #fff;
+    border: none;
+    top: 2px;
+
+}
+
+#mensaje{
+    font-size: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#capitales{
+    display: flex;
+    flex-direction: column;
+}
+
+footer {
+    background-color:rgb(61, 64, 203) ;
+    display: flex;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px 0;
+    z-index: 100;
+}
+
+.info{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif ;
+}
+
+#buscador{
+    width: 100%;
+}
+.Paises-estudio{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    background-color: #fff;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+
+
+img {
+    width: 200px;
+    height: auto;
+    border-radius: 8px;
+}
+
+.nombre {
+    font-size: 14px;
+    margin: 10px 0;
+    color: #333;
+}
+
+.cap {
+    font-size: 16px;
+    font-weight: bold;
+    color: #000;
+}
+
+#boton {
+    margin-top: 10px;
+    padding: 8px 12px;
+    border: none;
+    background-color: rgb(61, 64, 203);
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.estadistica{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+#contador{
+    font-display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    text-align: center;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+.contador1, contador2{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+#counter_buenas, #counter_malas {
+    font-size: 48px; 
+    font-weight: bold;
+    color: #2e3a59;
+    margin-bottom: 5px;
+}
+
+.Aciertos, .fallas {
+    font-size: 20px;
+    color: #555;
+    font-weight: 500;
+}
