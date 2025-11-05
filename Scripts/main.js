@@ -1,89 +1,59 @@
-const paises = [
-    {
-        id:1,
-        pais: "Argentina",
-        capital: "Buenos Aires"
-    },
-    {
-        id:2,
-        pais: "Alemania",
-        capital: "Berlin"
-    },
-    {
-        id:3,
-        pais: "Tajikistan",
-        capital: "Dushanbe"
-    },
-    {
-        id:4,
-        pais: "China",
-        precio: "Beijing"
-    },
-    {
-        id:5,
-        pais: "Rusia",
-        capital: "Moscu"
-    },
-    {
-        id:6,
-        pais: "Paraguay",
-        capital: "Asuncion"
-    },
-    {
-        id:7,
-        pais: "Chile",
-        capital: "Santiago"
-    },
-    {
-        id:8,
-        pais: "Australia",
-        capital: "Canberra"
-    },
-    {
-        id:9,
-        pais: "Sudan",
-        capital: "Khartoum"
-    },
-    {
-        id:10,
-        pais: "Egipto",
-        capital: "Cairo"
-    },
-    {
-        id:11,
-        pais: "Estados Unidos",
-        capital: "Washisngton DC"
-    },
-    {
-        id:12,
-        pais: "Canadá",
-        capital: "Ottawa"
-    },
-]
-
 let paisAdivinar = document.getElementById("pais-adivinar")
+let bandera = document.getElementById("bandera")
 let derecha = document.getElementById("boton-derecha")
 let izquierda = document.getElementById("boton-izquierda")
 let inicio = document.getElementById("inicio")
+const input = document.getElementById("input")
+let mensaje = document.getElementById("mensaje")
+const botonAdivinar = document.getElementById("boton-adivinar");
+let paises = []
 let indice = 0
 
 
-derecha.onclick = () => {
-    indice++
-    inicio.innerHTML = paises[indice].pais
+const API_KEY = "9d200c2749993ee7b2fb82dcf54bfb9d";
+const URL = `https://api.countrylayer.com/v2/all?access_key=${API_KEY}`;
+
+
+function obtenerPaises() {
+    fetch(URL)
+    .then(response => response.json())
+    .then(data => {
+        paises = data.filter(pais => pais.capital && pais.alpha2Code);
+        if(paises.length > 0){
+            mostrarPais();
+        }else{
+            inicio.innerHTML = "No hay paises disponibles";
+        }
+    })
+    .catch(() => {
+        inicio.innerHTML = "No se pudieron cargar los países";
+    });
 }
+
+function mostrarPais() {
+    let pais = paises[indice];
+    if (pais){
+        inicio.innerHTML = pais.translations?.es || pais.name 
+        bandera.src = `https://flagsapi.com/${pais.alpha2Code}/flat/64.png`;
+        input.value = "";
+        mensaje.innerHTML = "";
+    }
+}
+
+
+derecha.onclick = () => {
+    indice++;
+    mostrarPais();
+};
 
 izquierda.onclick = () => {
     indice--
-    inicio.innerHTML = paises[indice].pais
+    mostrarPais()
 }
 
-let input = document.getElementById("input")
-let mensaje = document.getElementById("mensaje")
-let botonAdivinar = document.getElementById("boton-adivinar");
 
 function adivinarCapital (){
-    let respuesta = input.value
+    let respuesta = input.value.toLowerCase()
     if(respuesta.toLowerCase() === paises[indice].capital.toLowerCase() ){
         mensaje.innerHTML = "¡Correcto! Sigue así"
     }else {
@@ -91,9 +61,13 @@ function adivinarCapital (){
     }
 }
 
-botonAdivinar.onclick = () => {
-    adivinarCapital();
-};
+input.addEventListener("keydown", (enter)=>{
+    if(enter.key === "Enter") {
+        botonAdivinar.click()
+    }
+})
+
+obtenerPaises()
 
 let buenas = document.getElementById("counter_buenas")
 let malas = document.getElementById("counter_malas")
@@ -142,6 +116,14 @@ let mensaje2 = document.getElementById("mensaje2")
 //    let busqueda_usuario = input2.value.toLowerCase()
 //    const busqueda = cards.find(card => card === //busqueda_usuario)
 //}
+
+input2.addEventListener("keydown", (enter)=>{
+    if(enter.key === "Enter") {
+        botonbuscar.click()
+    }
+
+})
+
 
 botonbuscar.onclick = () => {
     let busqueda_usuario = input2.value.toLowerCase()
