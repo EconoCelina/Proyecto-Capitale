@@ -1,3 +1,31 @@
+Swal.fire({
+    title: "Ingresa tu nombre de usuario",
+    input: "text",
+    inputAttributes: {
+    autocapitalize: "off"
+    },
+    confirmButtonText: "Continuar",
+    showLoaderOnConfirm: true,
+    preConfirm: async (nombre) => {
+        if (!nombre || nombre === "") {
+        Swal.showValidationMessage("Por favor ingresa un nombre");
+        return false;
+        }
+        return nombre;
+    },
+    allowOutsideClick: () => !Swal.isLoading()
+}).then((result) => {
+    if (result.isConfirmed) {
+        const nombreJugador = result.value;
+        localStorage.setItem("jugador", nombreJugador)
+    Swal.fire({
+        icon: "success",
+        title: `Bienvenido ${nombreJugador}`,
+        text: "Tu nombre fue guardado correctamente"
+    });
+    }
+});
+
 let paisAdivinar = document.getElementById("pais-adivinar")
 let bandera = document.getElementById("bandera")
 let derecha = document.getElementById("boton-derecha")
@@ -5,10 +33,21 @@ let izquierda = document.getElementById("boton-izquierda")
 let inicio = document.getElementById("inicio")
 const input = document.getElementById("input")
 let mensaje = document.getElementById("mensaje")
-const botonAdivinar = document.getElementById("boton-adivinar");
+const botonAdivinar = document.getElementById("boton-adivinar")
+
+let buenas = document.getElementById("counter_buenas")
+let malas = document.getElementById("counter_malas")
+let contador_puntos = document.getElementById("puntos")
+
+let contador_buenas = 0
+let contador_malas = 0
 let paises = []
 let indice = 0
 
+const local_storage_clave_buena = "contador_buenas"
+const local_storage_clave_mala = "contador_malas"
+const jugador_storage = "jugador"
+const ranking_storage = "ranking_jugadores"
 
 const API_KEY = "9d200c2749993ee7b2fb82dcf54bfb9d";
 const URL = `https://api.countrylayer.com/v2/all?access_key=${API_KEY}`;
@@ -25,18 +64,18 @@ function obtenerPaises() {
             inicio.innerHTML = "No hay paises disponibles";
         }
     })
-    .catch(() => {
-        inicio.innerHTML = "No se pudieron cargar los países";
+    .catch((error)=>{
+        inicio.innerHTML = "Error al cargar paises";
     });
 }
+
+obtenerPaises()
 
 function mostrarPais() {
     let pais = paises[indice];
     if (pais){
-        inicio.innerHTML = pais.translations?.es || pais.name 
-        bandera.src = `https://flagsapi.com/${pais.alpha2Code}/flat/64.png`;
-        input.value = "";
-        mensaje.innerHTML = "";
+        inicio.innerHTML = pais.translations?.es || pais.name
+        bandera.src = `https://www.banderas-mundo.es/data/flags/w702/${pais.alpha2Code.toLowerCase()}.webp`;
     }
 }
 
@@ -54,12 +93,22 @@ izquierda.onclick = () => {
 
 function adivinarCapital (){
     let respuesta = input.value.toLowerCase()
-    if(respuesta.toLowerCase() === paises[indice].capital.toLowerCase() ){
+    let acierto = respuesta.toLowerCase() === paises[indice].capital.toLowerCase()
+    const nombreJugador = localStorage.getItem(jugador_storage);
+    if(acierto){
         mensaje.innerHTML = "¡Correcto! Sigue así"
-    }else {
+    }
+    else {
         mensaje.innerHTML = "Incorrecto, ¡Prueba de nuevo!"
     }
+
+    if(nombreJugador){
+        contador(acierto, nombreJugador);
+    };
+    mostrarPais();
 }
+
+botonAdivinar.onclick = adivinarCapital;
 
 input.addEventListener("keydown", (enter)=>{
     if(enter.key === "Enter") {
@@ -67,73 +116,56 @@ input.addEventListener("keydown", (enter)=>{
     }
 })
 
-obtenerPaises()
 
-let buenas = document.getElementById("counter_buenas")
-let malas = document.getElementById("counter_malas")
-let contador_buenas = 0
-let contador_malas = 0
-const local_storage_clave_buena = "contador_buenas"
-const local_storage_clave_mala = "contador_malas"
-
-function contador(acierto) {
+function contador(acierto, nombreJugador) {
     if (acierto) {
     contador_buenas++;
     buenas.innerText = contador_buenas;
-    localStorage.setItem(local_storage_clave_buena,contador_buenas)
+    localStorage.setItem(local_storage_clave_buena,contador_buenas);
+    actualizarPuntaje(nombreJugador, 3);
 } else {
     contador_malas++;
     malas.innerText = contador_malas;
-    localStorage.setItem(local_storage_clave_mala,contador_malas)
+    localStorage.setItem(local_storage_clave_mala,contador_malas);
+    actualizarPuntaje(nombreJugador, -1);
 }
 }
 
-function adivinarCapital() {
-    let respuesta = input.value;
-    if (respuesta.toLowerCase() === paises[indice].capital.toLowerCase()) {
-    mensaje.innerHTML = "¡Correcto! Sigue así";
-    contador(true);
-} else {
-    mensaje.innerHTML = "Incorrecto, ¡Prueba de nuevo!";
-    contador(false);
-}
-}
+function actualizarPuntaje (nombre, punto){
+    try{
+        let ranking;
+        const rankingJSON = localStorage.getItem(ranking_storage);
+        if(rankingJSON){
+            ranking = JSON.parse(rankingJSON);
+        }else{
+            ranking =[];
+        }
 
-botonAdivinar.onclick = () => {
-    adivinarCapital();
-};
+        const jugador = ranking.find((j) => j.nombre === nombre )
 
-
-const cards = ["Cuba", "Bielorrusia", "Brasil", "España", "Islandia", "Japon", "Reoública de Macedonia", "Malta", "Mexico", "Rumania", "Sudáfrica", "Venezuela"]
-let input2 = document.getElementById("input2")
-let botonbuscar = document.getElementById("boton-buscar")
-let mensaje2 = document.getElementById("mensaje2")
-
-//let cards = document.querySelectorAll(".card")
-//No supe como hacer para generar un array a partir de las cards que estan en mi HTML. 
-
-//botonbuscar.onclick = () => {
-//    let busqueda_usuario = input2.value.toLowerCase()
-//    const busqueda = cards.find(card => card === //busqueda_usuario)
-//}
-
-input2.addEventListener("keydown", (enter)=>{
-    if(enter.key === "Enter") {
-        botonbuscar.click()
+        if (jugador){
+            jugador.puntaje += punto;
+        }else{
+            ranking.push({nombre: nombre, puntaje: punto});
+        }
+        renderizarJugadores(ranking)
+        localStorage.setItem(ranking_storage, JSON.stringify(ranking));
+    }catch (error){
+        contador_puntos.innerText ="Ha habido un error"
     }
+}
 
-})
+function renderizarJugadores(listajugadores) {
+    ranking.innerHTML = ""; 
+    listajugadores.sort((a, b) => b.puntaje - a.puntaje);
+    listajugadores.forEach(jugador => {
+        const card = document.createElement("div")
+        card.classList.add("card2")
+        card.innerHTML =`<span class="nombre-jugador">${jugador.nombre}</span>
+            <span class="puntaje-jugador">${jugador.puntaje} puntos</span>`;
+        ranking.append(card)
 
-
-botonbuscar.onclick = () => {
-    let busqueda_usuario = input2.value.toLowerCase()
-    const encontrado = cards.some(card => card.toLowerCase() === busqueda_usuario);
-    if(encontrado === true){
-        mensaje2.innerHTML = "Está en nuestra lista"
-    } else{
-        mensaje2.innerHTML = "No lo encontramos"
-    }
-
+    });
 }
 
 

@@ -16,117 +16,43 @@
     <div class="subtitulo">
         <h3 id="h3">¿Estas listo para adivinar la capital de un país?</h3>
     </div>
-    
-    <div id="pais-adivinar">
-        <img id="bandera">
-        <button id="boton-izquierda"> < </button>
-        <span id="inicio">Empieza!</span>
-        <button id="boton-derecha"> > </button>
-    </div>
 
-    <div id="capitales">
-        <input type="text" id="input" placeholder="Escribe la capital">
-        <button id="boton-adivinar">Comprobar</button>
-        <p id="mensaje"></p>
-    </div>
-
-    <h4 class="estadistica">ESTADÍSTICAS</h4>
     <div id="contador">
-        <div class="contador1">
+            <h5 class="Aciertos">Aciertos: </h5>
             <span id="counter_buenas">0</span>
-            <h4 class="Aciertos">Aciertos</h4>
-        </div>
-        <div class="contador2">
+            <h5 class="fallas">Fallas: </h5>
             <span id="counter_malas">0</span>
-            <h4 class="fallas">Fallas</h4>
-        </div>
-    
-    </div>
-
-    <h2 class="info">Continua informandote con nosotros </h2>
-
-    <div id="buscador">
-        <input type="text" id="input2" placeholder="¿Que país estas buscando?">
-        <button id="boton-buscar">Buscar</button> 
-        <p id="mensaje2"></p>
     </div>
     
-    <div class="Paises-estudio">
+    <div class="contenedor">
         <div class="card">
-            <img src="./Assets/bandera_Cuba.png" alt="Cuba" title="Cuba">
-            <h3 class="nombre" >Cuba</h3>
-            <p class="Cap"> La Habana</p>
-            <button id="boton">Conocer más</button>
-        </div>
-        
-        <div class="card">
-            <img src="./Assets/Bielorrusia.svg" alt="Bielorrusia" title="Bielorrusia">
-            <h3 class="nombre" >Bielorrusia</h3>
-            <p class="Cap"> Minsk </p>
-            <button id="boton">Conocer más</button>
-        </div>
-        <div class="card">
-            <img src="./Assets/Brasil.png" alt="Brasil" title="Brasil">
-            <h3 class="nombre" >Brasil</h3>
-            <p class="Cap">Brasilia</p>
-            <button id="boton">Conocer más</button>
-        </div>
-        <div class="card">
-            <img src="./Assets/España.png" alt="España" title="España">
-            <h3 class="nombre" >España</h3>
-            <p class="Cap">Madrid</p>
-            <button id="boton">Conocer más</button>
-        </div>
-        <div class="card">
-            <img src="./Assets/Islandia.png" alt="Islandia" title="Islandia">
-            <h3 class="nombre" >Islandia</h3>
-            <p class="Cap">Reykjavik</p>
-            <button id="boton">Conocer más</button>
-        </div>
-        <div class="card">
-            <img src="./Assets/Japon.svg" alt="Japon" title="Japon">
-            <h3 class="nombre" >Japon</h3>
-            <p class="Cap">Tokyo</p>
-            <button id="boton">Conocer más</button>
-        </div>
-        <div class="card">
-            <img src="./Assets/Macedonia.svg" alt="República de Macedonia" title="República de Macedonia">
-            <h3 class="nombre" >República de Macedonia</h3>
-            <p class="Cap">Skopje</p>
-            <button id="boton">Conocer más</button>
-        </div>
-        <div class="card">
-            <img src="./Assets/Malta.png" alt="Malta" title="Malta">
-            <h3 class="nombre" >Malta</h3>
-            <p class="Cap">Valleta</p>
-            <button id="boton">Conocer más</button>
-        </div>
-        <div class="card">
-            <img src="./Assets/Mexico.png" alt="Mexico" title="México">
-            <h3 class="nombre" >México</h3>
-            <p class="Cap">Ciudad de México</p>
-            <button id="boton">Conocer más</button>
-        </div>
-        <div class="card">
-            <img src="./Assets/Rumania.png" alt="Rumania" title="Rumania">
-            <h3 class="nombre">Rumania</h3>
-            <p class="Cap">Bucarest</p>
-            <button id="boton">Conocer más</button>
-        </div>
-        <div class="card">
-            <img src="./Assets/Sudafrica.png" alt="Sudáfrica" title="Sudáfrica">
-            <h3 class="nombre" >Sudáfrica</h3>
-            <p class="Cap">Pretoria, Ciudad del Cabo y Bloemfontein</p>
-            <button id="boton">Conocer más</button>
-        </div>
-        
-        <div class="card">
-            <img src="./Assets/Venezuela.png" alt="Venezuela" title="Venezuela">
-            <h3 class="nombre" >Venezuela</h3>
-            <p class="Cap">Caracas</p>
-            <button id="boton">Conocer más</button>
+            <div>
+                <img id="bandera">
+            </div>
+            <div id="pais-adivinar">
+                <button id="boton-izquierda"> < </button>
+                <span id="inicio">Empieza!</span>
+                <button id="boton-derecha"> > </button>
+            </div>
+            <div id="capitales">
+                <input type="text" id="input" placeholder="Escribe la capital">
+                <button id="boton-adivinar">Comprobar</button>
+                <p id="mensaje"></p>
+            </div>
         </div>
     </div>
+    
+    <p class="regla"> Reglas del juego</p>
+    <p class="regla_texto">Debes ingresar la capital de cada país. Por cada acierto, obtendras 3 puntos y por cada respuesta incorrecta, se te descontará 1 punto. ¡Buena suerte!</p>
+    
+    <h4 class="jugadores">RANKING DE JUGADORES</h4>
+    <div class="ranking" id = "ranking">
+    </div>
+    
     <footer></footer>
+
+    <!--SWEETALERT-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </body
 </html>
